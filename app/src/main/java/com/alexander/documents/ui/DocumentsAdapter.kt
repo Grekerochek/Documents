@@ -20,7 +20,6 @@ import androidx.core.content.ContextCompat
 import android.util.DisplayMetrics
 import android.content.Context
 import kotlin.math.roundToInt
-import androidx.core.graphics.drawable.DrawableCompat
 import com.alexander.documents.R
 import com.alexander.documents.entity.Document
 
@@ -127,12 +126,8 @@ class DocumentsAdapter(
             val imageDrawableAndColor = getImageDrawableAndColor(document.ext)
             photoView.setImageResource(imageDrawableAndColor.first)
             photoView.setBackgroundResource(R.drawable.round_corners_drawable)
-            (photoView.background as GradientDrawable).apply {
-                setColor(ContextCompat.getColor(photoView.context, imageDrawableAndColor.second))
-                alpha = (100 - 16) * 255 / 100
-            }
-            val drawable = ContextCompat.getDrawable(photoView.context, imageDrawableAndColor.first)
-            DrawableCompat.setTint(drawable!!, imageDrawableAndColor.second)
+            (photoView.background as GradientDrawable)
+                .setColor(ContextCompat.getColor(photoView.context, imageDrawableAndColor.second))
             val dp = dpToPx(photoView.context, 25)
             photoView.setPadding(dp, dp, dp, dp)
         }
@@ -167,7 +162,7 @@ class DocumentsAdapter(
         }
     }
 
-    fun dpToPx(context: Context, dp: Int): Int {
+    private fun dpToPx(context: Context, dp: Int): Int {
         val displayMetrics = context.resources.displayMetrics
         return (dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT)).roundToInt()
     }
