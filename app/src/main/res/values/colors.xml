@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FFFFFF</color>
+    <color name="colorPrimaryDark">#FFFFFF</color>
+    <color name="colorAccent">#000000</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorGrey">#818C99</color>
+
+    <color name="colorText">#3F8AE0</color>
+    <color name="colorMusic">#3F8AE0</color>
+    <color name="colorVideo">#AB75E0</color>
+    <color name="colorZip">#4BB34B</color>
+    <color name="colorBook">#FFA000</color>
+    <color name="colorOther">#3F8AE0</color>
+</resources>

@@ -1,0 +1,22 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="PopupMenu">
+        <item name="android:popupBackground">@drawable/round_corners_pop_up</item>
+    </style>
+
+    <style name="Fade">
+        <item name="android:ellipsize">none</item>
+        <item name="android:requiresFadingEdge">horizontal</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:fadingEdgeLength">40dp</item>
+    </style>
+
+</resources>
