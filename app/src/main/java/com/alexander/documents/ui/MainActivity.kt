@@ -43,16 +43,14 @@ class MainActivity : AppCompatActivity() {
         if (!VK.isLoggedIn()) {
             VK.login(this, arrayListOf(VKScope.DOCS))
         } else {
-            recyclerViewDocuments.adapter = documentsAdapter
-            containerView.setOnRefreshListener { requestDocs() }
-            requestDocs()
+            init()
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         val callback = object : VKAuthCallback {
             override fun onLogin(token: VKAccessToken) {
-                requestDocs()
+                init()
             }
 
             override fun onLoginFailed(errorCode: Int) {
@@ -62,6 +60,12 @@ class MainActivity : AppCompatActivity() {
         if (data == null || !VK.onActivityResult(requestCode, resultCode, data, callback)) {
             super.onActivityResult(requestCode, resultCode, data)
         }
+    }
+
+    private fun init() {
+        recyclerViewDocuments.adapter = documentsAdapter
+        containerView.setOnRefreshListener { requestDocs() }
+        requestDocs()
     }
 
     private fun requestDocs() {

@@ -1,7 +1,6 @@
 package com.alexander.documents.ui
 
 import android.annotation.SuppressLint
-import android.graphics.drawable.GradientDrawable
 import android.view.*
 import android.widget.ImageView
 import androidx.recyclerview.widget.DiffUtil
@@ -16,10 +15,6 @@ import kotlinx.android.synthetic.main.document_item.view.*
 import java.util.*
 import java.text.SimpleDateFormat
 import androidx.appcompat.widget.PopupMenu
-import androidx.core.content.ContextCompat
-import android.util.DisplayMetrics
-import android.content.Context
-import kotlin.math.roundToInt
 import com.alexander.documents.R
 import com.alexander.documents.entity.Document
 
@@ -110,9 +105,6 @@ class DocumentsAdapter(
 
     private fun setImage(document: Document, photoView: ImageView) {
         if (document.photo != null) {
-            photoView.setImageDrawable(null)
-            photoView.background = null
-            photoView.setPadding(0, 0, 0, 0)
             Glide.with(photoView.context)
                 .load(document.photo.src)
                 .apply(
@@ -123,48 +115,27 @@ class DocumentsAdapter(
                 )
                 .into(photoView)
         } else {
-            val imageDrawableAndColor = getImageDrawableAndColor(document.ext)
-            photoView.setImageResource(imageDrawableAndColor.first)
-            photoView.setBackgroundResource(R.drawable.round_corners_drawable)
-            (photoView.background as GradientDrawable)
-                .setColor(ContextCompat.getColor(photoView.context, imageDrawableAndColor.second))
-            val dp = dpToPx(photoView.context, 25)
-            photoView.setPadding(dp, dp, dp, dp)
+            Glide.with(photoView.context)
+                .load(getImageDrawable(document.ext))
+                .apply(
+                    RequestOptions().transforms(
+                        CenterCrop(),
+                        RoundedCorners(6)
+                    )
+                )
+                .into(photoView)
         }
     }
 
-    private fun getImageDrawableAndColor(ext: String): Pair<Int, Int> {
+    private fun getImageDrawable(ext: String): Int {
         return when (ext) {
-            "ZIP" -> Pair(
-                R.drawable.ic_zip,
-                R.color.colorZip
-            )
-            "MP4" -> Pair(
-                R.drawable.ic_video,
-                R.color.colorVideo
-            )
-            "MP3" -> Pair(
-                R.drawable.ic_music,
-                R.color.colorMusic
-            )
-            "PDF", "EPUB" -> Pair(
-                R.drawable.ic_book,
-                R.color.colorBook
-            )
-            "TXT", "DOCX" -> Pair(
-                R.drawable.ic_text,
-                R.color.colorText
-            )
-            else -> Pair(
-                R.drawable.ic_other,
-                R.color.colorOther
-            )
+            "ZIP" -> R.drawable.ic_placeholder_document_archive_72
+            "MP4" -> R.drawable.ic_placeholder_document_video_72
+            "MP3" -> R.drawable.ic_placeholder_document_music_72
+            "PDF", "EPUB" -> R.drawable.ic_placeholder_document_book_72
+            "TXT", "DOCX" -> R.drawable.ic_placeholder_document_text_72
+            else -> R.drawable.ic_placeholder_document_other_72
         }
-    }
-
-    private fun dpToPx(context: Context, dp: Int): Int {
-        val displayMetrics = context.resources.displayMetrics
-        return (dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT)).roundToInt()
     }
 
     class DiffCallback : DiffUtil.ItemCallback<Document>() {
